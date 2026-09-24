@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f8ff">
+  <title>Lumi — 매일을 더 가볍게</title>
+  <style>
+    :root {
+      --ink: #17233d;
+      --sub: #65718a;
+      --line: #e9eef8;
+      --blue: #2f80f7;
+      --blue-deep: #2464da;
+      --sky: #eff6ff;
+      --mint: #d9fff4;
+      --pink: #ff88cb;
+      --page: #f6f8fc;
+      --card: #fff;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: Pretendard, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: -.035em;
+    }
+    button, a { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    button { border: 0; }
+
+    .wrap { width: min(1180px, calc(100% - 48px)); margin-inline: auto; }
+    .eyebrow { margin: 0 0 15px; color: var(--blue); font-size: 14px; font-weight: 800; letter-spacing: -.01em; }
+    .section-title { margin: 0; font-size: clamp(34px, 4.15vw, 58px); line-height: 1.17; letter-spacing: -.065em; }
+    .section-desc { margin: 22px 0 0; color: var(--sub); font-size: 18px; line-height: 1.7; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(221, 229, 243, .82);
+      background: rgba(246, 248, 252, .95);
+    }
+    .nav { height: 72px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: inline-flex; align-items: center; gap: 9px; font-size: 24px; font-weight: 850; letter-spacing: -.075em; }
+    .brand-mark { width: 25px; height: 25px; border-radius: 9px 9px 9px 3px; background: linear-gradient(140deg, #6caeff, #347af3 60%, #174bbf); box-shadow: 0 5px 12px rgba(47, 128, 247, .24); }
+    .nav-links { display: flex; align-items: center; gap: 29px; color: #4e5b73; font-size: 15px; font-weight: 700; }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-action { padding: 10px 16px; border-radius: 12px; color: #fff; background: var(--ink); font-size: 14px; font-weight: 750; transition: transform .18s ease, background .18s ease; }
+    .nav-action:hover { transform: translateY(-2px); background: #283956; }
+
+    .hero { position: relative; overflow: hidden; padding: 95px 0 82px; background: #f8fbff; }
+    .hero::before { position: absolute; width: 680px; height: 680px; top: -365px; right: -50px; border-radius: 50%; background: radial-gradient(circle at 38% 55%, rgba(95, 167, 255, .29), rgba(216, 236, 255, .35) 39%, rgba(248, 251, 255, 0) 70%); content: ""; }
+    .hero-grid { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; min-height: 522px; }
+    .hero-copy { position: relative; z-index: 1; padding: 18px 0; }
+    .hero h1 { max-width: 9ch; margin: 0; font-size: clamp(52px, 6.3vw, 86px); font-weight: 850; line-height: 1.08; letter-spacing: -.085em; }
+    .hero h1 strong { color: var(--blue); font-weight: inherit; }
+    .hero-text { max-width: 31em; margin: 25px 0 0; color: var(--sub); font-size: 18px; line-height: 1.72; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
+    .button-primary, .button-secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 53px; padding: 0 22px; border-radius: 15px; font-size: 16px; font-weight: 800; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
+    .button-primary { color: #fff; background: var(--blue); box-shadow: 0 12px 22px rgba(47, 128, 247, .2); }
+    .button-primary:hover { transform: translateY(-3px); background: var(--blue-deep); box-shadow: 0 16px 28px rgba(47, 128, 247, .28); }
+    .button-secondary { color: #42506a; border: 1px solid #dce5f2; background: #fff; }
+    .button-secondary:hover { transform: translateY(-3px); background: #f5f8ff; }
+    .hero-note { display: flex; align-items: center; gap: 9px; margin: 22px 0 0; color: #8190a9; font-size: 13px; font-weight: 600; }
+    .hero-note i { display: block; width: 7px; height: 7px; border-radius: 50%; background: #5bc8a8; }
+
+    .hero-art { position: relative; height: 516px; }
+    .hero-orb { position: absolute; width: 370px; height: 370px; right: 26px; top: 72px; border-radius: 50%; background: linear-gradient(145deg, #daedff, #d6f7ef); }
+    .phone { position: absolute; z-index: 2; width: 264px; height: 492px; top: 9px; right: 100px; overflow: hidden; padding: 12px; border: 8px solid #1d2638; border-radius: 41px; background: #1d2638; box-shadow: 0 30px 50px rgba(48, 79, 125, .2), 0 9px 16px rgba(30, 48, 77, .17); transform: rotate(5deg); }
+    .phone-screen { position: relative; height: 100%; overflow: hidden; border-radius: 25px; padding: 25px 18px; background: linear-gradient(155deg, #f5fbff 0%, #f0f6ff 54%, #f9fbff 100%); }
+    .phone-notch { width: 82px; height: 23px; margin: -25px auto 18px; border-radius: 0 0 15px 15px; background: #1d2638; }
+    .screen-greeting { color: #8390a4; font-size: 12px; font-weight: 650; }
+    .screen-title { margin-top: 4px; font-size: 21px; font-weight: 850; }
+    .screen-balance { position: relative; margin-top: 17px; overflow: hidden; padding: 17px; border-radius: 20px; color: #fff; background: linear-gradient(135deg, #418df6, #2268dd); box-shadow: 0 10px 19px rgba(47, 128, 247, .19); }
+    .screen-balance::after { position: absolute; width: 106px; height: 106px; right: -36px; top: -44px; border: 17px solid rgba(255,255,255,.14); border-radius: 50%; content: ""; }
+    .screen-balance small { position: relative; display: block; opacity: .82; font-size: 11px; font-weight: 650; }
+    .screen-balance b { position: relative; display: block; margin-top: 8px; font-size: 21px; letter-spacing: -.05em; }
+    .quick-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 16px; }
+    .quick { padding: 11px 3px 9px; border-radius: 14px; text-align: center; background: #fff; color: #5e6a80; font-size: 10px; font-weight: 750; box-shadow: 0 5px 11px rgba(44, 73, 114, .06); }
+    .quick .icon { display: grid; place-items: center; width: 26px; height: 26px; margin: 0 auto 6px; border-radius: 9px; color: #317bf3; background: #e9f2ff; font-size: 14px; }
+    .timeline { margin-top: 18px; }
+    .timeline-head { display: flex; align-items: center; justify-content: space-between; font-size: 12px; font-weight: 850; }
+    .timeline-head span { color: #9aa6b9; font-size: 10px; }
+    .activity { display: flex; align-items: center; gap: 9px; padding: 11px 0; border-bottom: 1px solid #e6edf7; }
+    .activity-dot { width: 28px; height: 28px; border-radius: 10px; background: #dffbf2; }
+    .activity-dot.purple { background: #ede8ff; }
+    .activity-text { flex: 1; color: #4e5b70; font-size: 10px; font-weight: 750; }
+    .activity-text small { display: block; margin-top: 2px; color: #9ca7b7; font-size: 9px; font-weight: 600; }
+    .activity b { font-size: 10px; }
+    .float-card { position: absolute; z-index: 3; display: flex; align-items: center; gap: 11px; padding: 13px 15px; border: 1px solid rgba(255,255,255,.75); border-radius: 18px; background: rgba(255,255,255,.92); box-shadow: 0 16px 31px rgba(44, 76, 122, .12); }
+    .float-card.left { left: 7px; top: 116px; }
+    .float-card.right { right: 0; bottom: 55px; }
+    .float-icon { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 12px; color: #9b3989; background: #ffe3f4; font-size: 18px; }
+    .float-card b { display: block; font-size: 12px; }
+    .float-card span { display: block; margin-top: 3px; color: #8994a6; font-size: 10px; font-weight: 650; }
+
+    .trust { padding: 23px 0; border-top: 1px solid #edf1f8; border-bottom: 1px solid #edf1f8; background: #fff; }
+    .trust-list { display: flex; align-items: center; justify-content: space-between; gap: 20px; color: #92a0b5; font-size: 14px; font-weight: 750; }
+    .trust-list strong { color: #3d4a63; font-size: 15px; }
+    .trust-logo { color: #a7b1c1; letter-spacing: -.03em; }
+
+    .intro { padding: 144px 0 104px; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 56px; }
+    .feature { min-height: 302px; padding: 27px; border: 1px solid #e7edf7; border-radius: 26px; background: var(--card); box-shadow: 0 12px 30px rgba(48, 71, 112, .035); }
+    .feature-icon { display: grid; place-items: center; width: 49px; height: 49px; margin-bottom: 49px; border-radius: 16px; color: #377ff5; background: #e9f2ff; font-size: 24px; }
+    .feature:nth-child(2) .feature-icon { color: #af4697; background: #ffeaf6; }
+    .feature:nth-child(3) .feature-icon { color: #13a882; background: #ddfaf1; }
+    .feature h3 { margin: 0; font-size: 23px; letter-spacing: -.055em; }
+    .feature p { margin: 12px 0 0; color: #758198; font-size: 15px; line-height: 1.65; }
+
+    .garden-section { padding: 36px 0 144px; }
+    .garden { position: relative; isolation: isolate; min-height: 655px; overflow: hidden; border-radius: 34px; color: #fff; background: linear-gradient(135deg, #172952 0%, #16244c 46%, #0d1734 100%); }
+    .garden::before { position: absolute; z-index: 0; width: 520px; height: 520px; right: -210px; bottom: -300px; border: 1px solid rgba(196,221,255,.14); border-radius: 50%; box-shadow: 0 0 0 56px rgba(196,221,255,.025), 0 0 0 115px rgba(196,221,255,.025); content: ""; }
+    .ambient-orb { position: absolute; z-index: 0; width: 430px; height: 430px; top: -265px; right: -38px; border-radius: 50%; opacity: .9; background: radial-gradient(circle at 34% 34%, rgba(223, 241, 255, .94) 0, rgba(168, 205, 255, .78) 16%, rgba(112, 165, 255, .43) 39%, rgba(84, 128, 236, .08) 58%, rgba(84, 128, 236, 0) 72%); pointer-events: none; }
+    .garden-copy { position: relative; z-index: 2; max-width: 520px; padding: 74px 0 0 67px; pointer-events: none; }
+    .garden .eyebrow { color: #a9ccff; }
+    .garden .section-title { color: #fff; }
+    .garden .section-desc { color: #c4d3ee; }
+    .garden-chip { display: inline-flex; align-items: center; gap: 8px; margin-top: 28px; padding: 10px 13px; border: 1px solid rgba(218,232,255,.18); border-radius: 99px; color: #d4e5ff; background: rgba(255,255,255,.08); font-size: 13px; font-weight: 700; }
+    .garden-chip i { display: block; width: 7px; height: 7px; border-radius: 50%; background: #8bc1ff; box-shadow: 0 0 10px #8bc1ff; }
+    .garden-instruction { position: absolute; z-index: 2; right: 47px; bottom: 39px; color: rgba(235,244,255,.67); font-size: 13px; font-weight: 700; pointer-events: none; }
+    .garden-instruction b { color: #fff; }
+    #impact-canvas { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; visibility: hidden; pointer-events: none; }
+    #impact-canvas.active { visibility: visible; }
+
+    .closing { padding: 9px 0 130px; }
+    .closing-card { position: relative; overflow: hidden; padding: 75px 68px; border-radius: 32px; color: #fff; background: #2f80f7; }
+    .closing-card::before { position: absolute; width: 430px; height: 430px; right: -90px; bottom: -260px; border: 51px solid rgba(255,255,255,.11); border-radius: 50%; content: ""; }
+    .closing-card h2 { position: relative; max-width: 13ch; margin: 0; font-size: clamp(34px, 4.3vw, 59px); line-height: 1.14; letter-spacing: -.075em; }
+    .closing-card p { position: relative; margin: 20px 0 0; color: rgba(255,255,255,.79); font-size: 17px; line-height: 1.6; }
+    .closing-card .button-secondary { position: relative; margin-top: 28px; border-color: transparent; color: #2265d7; }
+
+    footer { padding: 34px 0 47px; border-top: 1px solid #e6ecf6; color: #8895a8; font-size: 13px; }
+    .footer-row { display: flex; justify-content: space-between; gap: 20px; }
+    .footer-row .brand { color: #526078; font-size: 20px; }
+
+    @media (max-width: 800px) {
+      .wrap { width: min(100% - 36px, 580px); }
+      .nav-links { display: none; }
+      .hero { padding: 56px 0 35px; }
+      .hero-grid { display: block; min-height: 0; }
+      .hero h1 { font-size: clamp(49px, 13vw, 72px); }
+      .hero-art { height: 455px; margin-top: 16px; }
+      .hero-orb { width: 330px; height: 330px; right: 50%; transform: translateX(50%); }
+      .phone { right: 50%; transform: translateX(50%) rotate(4deg); }
+      .float-card.left { left: 2px; }
+      .float-card.right { right: 2px; }
+      .trust-list { flex-wrap: wrap; justify-content: center; }
+      .trust-list strong { width: 100%; text-align: center; }
+      .intro { padding: 92px 0 75px; }
+      .feature-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 36px; }
+      .feature { min-height: 0; padding: 25px; }
+      .feature-icon { margin-bottom: 27px; }
+      .garden-section { padding: 18px 0 88px; }
+      .garden { min-height: 620px; border-radius: 25px; }
+      .ambient-orb { width: 340px; height: 340px; top: -225px; right: -120px; }
+      .garden-copy { padding: 48px 29px 0; }
+      .garden-instruction { right: 28px; bottom: 29px; }
+      .closing { padding-bottom: 84px; }
+      .closing-card { padding: 50px 29px; border-radius: 25px; }
+      .footer-row { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav wrap" aria-label="주 메뉴">
+      <a class="brand" href="#top" aria-label="Lumi 홈"><span class="brand-mark" aria-hidden="true"></span>lumi</a>
+      <div class="nav-links">
+        <a href="#features">서비스</a>
+        <a href="#garden">lumi moment</a>
+        <a href="#start">시작하기</a>
+      </div>
+      <a class="nav-action" href="#start">앱 열기</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Your day, in one gentle flow</p>
+          <h1>매일을 가볍게,<br><strong>마음은 더 가까이.</strong></h1>
+          <p class="hero-text">돈을 관리하고, 약속을 나누고, 서로의 하루를 응원하는 가장 다정한 방법. lumi가 복잡한 일상을 한 화면에 담아드려요.</p>
+          <div class="hero-actions">
+            <a class="button-primary" href="#start">lumi 시작하기</a>
+            <a class="button-secondary" href="#features">어떤 서비스인가요?</a>
+          </div>
+          <p class="hero-note"><i aria-hidden="true"></i> 가입비 없이, 필요한 순간에만 가볍게</p>
+        </div>
+        <div class="hero-art" aria-label="lumi 앱 화면 미리보기">
+          <div class="hero-orb" aria-hidden="true"></div>
+          <div class="float-card left" aria-hidden="true"><span class="float-icon">✦</span><div><b>오늘의 약속</b><span>저녁 7:30 · 성수</span></div></div>
+          <div class="phone" aria-hidden="true">
+            <div class="phone-screen">
+              <div class="phone-notch"></div>
+              <div class="screen-greeting">목요일, 9월 24일</div>
+              <div class="screen-title">안녕, 지수님</div>
+              <div class="screen-balance"><small>이번 달 남은 생활비</small><b>₩ 428,600</b></div>
+              <div class="quick-row">
+                <div class="quick"><span class="icon">₩</span>내 지갑</div>
+                <div class="quick"><span class="icon">♡</span>모임</div>
+                <div class="quick"><span class="icon">☼</span>오늘</div>
+              </div>
+              <div class="timeline">
+                <div class="timeline-head">오늘의 흐름 <span>전체 보기</span></div>
+                <div class="activity"><span class="activity-dot"></span><span class="activity-text">친구와 저녁 약속<small>오후 7:30</small></span><b>성수</b></div>
+                <div class="activity"><span class="activity-dot purple"></span><span class="activity-text">함께 모은 여행비<small>이번 주 목표</small></span><b>72%</b></div>
+              </div>
+            </div>
+          </div>
+          <div class="float-card right" aria-hidden="true"><span class="float-icon">♡</span><div><b>여행비 목표 달성</b><span>친구 4명과 함께</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust" aria-label="서비스 요약">
+      <div class="wrap trust-list"><strong>하루에 필요한 모든 연결을 한 곳에.</strong><span class="trust-logo">wallet</span><span class="trust-logo">together</span><span class="trust-logo">little things</span><span class="trust-logo">your rhythm</span></div>
+    </section>
+
+    <section id="features" class="intro wrap">
+      <p class="eyebrow">Designed for a lighter day</p>
+      <h2 class="section-title">해야 할 일은 줄이고,<br>좋아하는 순간은 더 많이.</h2>
+      <p class="section-desc">lumi는 금융, 약속, 그리고 사람 사이의 작은 안부를 하나의 리듬으로 연결합니다.</p>
+      <div class="feature-grid">
+        <article class="feature"><div class="feature-icon">₩</div><h3>한눈에 보는 내 지갑</h3><p>흩어진 생활비와 목표를 오늘의 흐름 안에서 쉽고 선명하게 확인하세요.</p></article>
+        <article class="feature"><div class="feature-icon">♡</div><h3>함께라서 쉬운 약속</h3><p>모임을 만들고, 비용을 나누고, 서로의 일정을 부드럽게 이어갈 수 있어요.</p></article>
+        <article class="feature"><div class="feature-icon">☼</div><h3>하루를 반짝이게</h3><p>나를 위한 작은 기록과 다정한 응원을 모아 오늘을 더 기분 좋게 마무리해요.</p></article>
+      </div>
+    </section>
+
+    <section id="garden" class="garden-section wrap">
+      <div class="garden" data-impact-garden>
+        <div class="ambient-orb" aria-hidden="true"></div>
+        <canvas id="impact-canvas" aria-hidden="true"></canvas>
+        <div class="garden-copy">
+          <p class="eyebrow">lumi moment</p>
+          <h2 class="section-title">가볍게 움직이면,<br>작은 빛이 반응해요.</h2>
+          <p class="section-desc">이 영역 위에서 마우스를 움직여 보세요. 짧은 빛 조각과 은은한 파동이 공간에 번졌다가 자연스럽게 사라집니다.</p>
+          <span class="garden-chip"><i aria-hidden="true"></i> interaction is on</span>
+        </div>
+        <p class="garden-instruction"><b>마우스를 움직여</b> 빛의 임팩트를 만들어 보세요</p>
+      </div>
+    </section>
+
+    <section id="start" class="closing wrap">
+      <div class="closing-card">
+        <h2>당신의 오늘에<br>가벼운 빛을 더해요.</h2>
+        <p>lumi와 함께라면, 바쁜 일상도 내 마음에 맞는 리듬으로 흐릅니다.</p>
+        <a href="#top" class="button-secondary">지금 시작하기</a>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap footer-row"><span class="brand"><span class="brand-mark" aria-hidden="true"></span>lumi</span><span>© 2026 lumi. Designed for a lighter day.</span></div></footer>
+
+  <script>
+    (() => {
+      const garden = document.querySelector('[data-impact-garden]');
+      const canvas = document.getElementById('impact-canvas');
+      const ambientOrbElement = document.querySelector('.ambient-orb');
+      const ctx = canvas.getContext('2d', { alpha: true });
+      const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const impacts = [];
+      const colors = ['#e3f1ff', '#b6d9ff', '#80baff', '#4f94f4', '#79cfff'];
+      let width = 0;
+      let height = 0;
+      let pixelRatio = 1;
+      let frame = 0;
+      let lastBloom = 0;
+      let lastPoint = null;
+      const ambient = { x: 0, y: 0, targetX: 0, targetY: 0, vx: 0, vy: 0 };
+      let inView = false;
+
+      function sizeCanvas() {
+        const rect = garden.getBoundingClientRect();
+        pixelRatio = Math.min(devicePixelRatio || 1, 1.25);
+        width = Math.round(rect.width);
+        height = Math.round(rect.height);
+        canvas.width = Math.round(width * pixelRatio);
+        canvas.height = Math.round(height * pixelRatio);
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      }
+
+      function wake() {
+        if (prefersReducedMotion || !inView) return;
+        if (!frame) frame = requestAnimationFrame(paint);
+      }
+
+      function easeOut(value) { return 1 - Math.pow(1 - value, 3); }
+
+      function makeFragments(count) {
+        return Array.from({ length: count }, () => {
+          const angle = Math.random() * Math.PI * 2;
+          return {
+            angle,
+            distance: 22 + Math.random() * 148,
+            length: 3 + Math.random() * 11,
+            width: Math.random() > .82 ? 2.2 : 1.15,
+            tilt: (Math.random() - .5) * .78,
+            delay: Math.random() * .21,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            dot: Math.random() > .64,
+            spark: Math.random() > .8
+          };
+        });
+      }
+
+      function addImpact(x, y, strength = 1) {
+        if (prefersReducedMotion || !inView) return;
+        if (impacts.length >= 6) return;
+        impacts.push({
+          x, y,
+          start: performance.now(),
+          life: 1120 + Math.random() * 180,
+          scale: strength,
+          fragments: makeFragments(22)
+        });
+        wake();
+      }
+
+      function drawImpact(impact, now) {
+        const age = Math.max(0, (now - impact.start) / impact.life);
+        if (age >= 1) return false;
+        const bloom = easeOut(Math.min(age * 1.85, 1));
+        const fade = age < .64 ? 1 : 1 - ((age - .64) / .36);
+        ctx.save();
+        ctx.lineCap = 'round';
+        for (const fragment of impact.fragments) {
+          const local = Math.max(0, (age - fragment.delay) / (1 - fragment.delay));
+          if (local === 0) continue;
+          const travel = fragment.distance * (.17 + .83 * easeOut(Math.min(local * 1.25, 1))) * impact.scale;
+          const x = impact.x + Math.cos(fragment.angle) * travel;
+          const y = impact.y + Math.sin(fragment.angle) * travel * .76;
+          const length = fragment.length * (.38 + .62 * local) * impact.scale;
+          const direction = fragment.angle + fragment.tilt;
+          ctx.globalAlpha = fade * (.28 + .64 * local);
+          ctx.strokeStyle = fragment.color;
+          ctx.lineWidth = fragment.width;
+          ctx.beginPath();
+          ctx.moveTo(x - Math.cos(direction) * length / 2, y - Math.sin(direction) * length / 2);
+          ctx.lineTo(x + Math.cos(direction) * length / 2, y + Math.sin(direction) * length / 2);
+          ctx.stroke();
+          if (fragment.dot) {
+            ctx.fillStyle = fragment.color;
+            ctx.beginPath();
+            ctx.arc(x, y, fragment.width * (fragment.spark ? 1.22 : .7), 0, Math.PI * 2);
+            ctx.fill();
+          }
+          if (fragment.spark && local < .58) {
+            const sparkLength = length * (1.5 - local);
+            ctx.globalAlpha = fade * (1 - local) * .55;
+            ctx.lineWidth = .8;
+            ctx.beginPath();
+            ctx.moveTo(x - Math.cos(direction) * sparkLength, y - Math.sin(direction) * sparkLength);
+            ctx.lineTo(x + Math.cos(direction) * sparkLength, y + Math.sin(direction) * sparkLength);
+            ctx.stroke();
+          }
+        }
+        ctx.restore();
+        return true;
+      }
+
+      function updateAmbientOrb() {
+        ambient.vx += (ambient.targetX - ambient.x) * .032;
+        ambient.vy += (ambient.targetY - ambient.y) * .032;
+        ambient.vx *= .82;
+        ambient.vy *= .82;
+        ambient.x += ambient.vx;
+        ambient.y += ambient.vy;
+        ambientOrbElement.style.transform = `translate3d(${ambient.x.toFixed(2)}px, ${ambient.y.toFixed(2)}px, 0)`;
+        return Math.abs(ambient.targetX - ambient.x) > .08 || Math.abs(ambient.targetY - ambient.y) > .08 || Math.hypot(ambient.vx, ambient.vy) > .04;
+      }
+
+      function paint(now) {
+        frame = 0;
+        ctx.clearRect(0, 0, width, height);
+        for (let index = impacts.length - 1; index >= 0; index--) {
+          if (!drawImpact(impacts[index], now)) impacts.splice(index, 1);
+        }
+        const ambientMoving = updateAmbientOrb();
+        if (impacts.length) canvas.classList.add('active');
+        else canvas.classList.remove('active');
+        if (impacts.length || ambientMoving) {
+          frame = requestAnimationFrame(paint);
+        } else {
+          canvas.classList.remove('active');
+        }
+      }
+
+      garden.addEventListener('pointermove', (event) => {
+        if (!inView || prefersReducedMotion) return;
+        const bounds = garden.getBoundingClientRect();
+        const now = performance.now();
+        const point = { x: event.clientX - bounds.left, y: event.clientY - bounds.top };
+        ambient.targetX = ((point.x / width) - .5) * 94;
+        // Keep the orb tucked above the card: lower pointer positions nudge it upward,
+        // so its top edge never drops into view.
+        ambient.targetY = -Math.max(0, ((point.y / height) - .5) * 58);
+        const distance = lastPoint ? Math.hypot(point.x - lastPoint.x, point.y - lastPoint.y) : 90;
+        if (distance > 58 && now - lastBloom > 145) {
+          addImpact(point.x, point.y, Math.min(1.18, .82 + distance / 260));
+          lastPoint = point;
+          lastBloom = now;
+        }
+        wake();
+      }, { passive: true });
+
+      garden.addEventListener('pointerleave', () => {
+        lastPoint = null;
+        ambient.targetX = 0;
+        ambient.targetY = 0;
+        wake();
+      });
+      garden.addEventListener('pointerdown', (event) => {
+        if (!inView || prefersReducedMotion) return;
+        const bounds = garden.getBoundingClientRect();
+        addImpact(event.clientX - bounds.left, event.clientY - bounds.top, 1.35);
+      }, { passive: true });
+
+      new ResizeObserver(sizeCanvas).observe(garden);
+      new IntersectionObserver((entries) => {
+        inView = entries[0].isIntersecting;
+        if (!inView) {
+          impacts.length = 0;
+          ambient.x = 0;
+          ambient.y = 0;
+          ambient.targetX = 0;
+          ambient.targetY = 0;
+          ambient.vx = 0;
+          ambient.vy = 0;
+          ambientOrbElement.style.transform = 'translate3d(0, 0, 0)';
+          if (frame) cancelAnimationFrame(frame);
+          frame = 0;
+          ctx.clearRect(0, 0, width, height);
+          canvas.classList.remove('active');
+        }
+      }, { threshold: .12 }).observe(garden);
+      sizeCanvas();
+    })();
+  </script>
+</body>
+</html>
