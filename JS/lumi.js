@@ -184,3 +184,60 @@
       }, { threshold: .12 }).observe(garden);
       sizeCanvas();
     })();
+
+    (() => {
+      const root = document.documentElement;
+      if (!root.classList.contains('motion-ready')) return;
+
+      const arrival = document.querySelector('.arrival');
+      if (arrival) {
+        arrival.addEventListener('animationend', (event) => {
+          if (event.animationName === 'lumi-curtain') arrival.remove();
+        }, { once: false });
+        window.setTimeout(() => arrival.remove(), 2200);
+      }
+
+      const revealGroups = [
+        ['.trust-list'],
+        ['.intro > .eyebrow', '.intro > .section-title', '.intro > .section-desc', '.feature-grid .feature'],
+        ['.garden', '.garden-copy', '.garden-instruction'],
+        ['.closing-card'],
+        ['footer .footer-row']
+      ];
+
+      const revealItems = [];
+      revealGroups.forEach((selectors) => {
+        selectors.forEach((selector) => {
+          document.querySelectorAll(selector).forEach((element) => {
+            if (revealItems.includes(element)) return;
+            revealItems.push(element);
+          });
+        });
+      });
+
+      revealItems.forEach((element, index) => {
+        element.classList.add('reveal-target');
+        element.style.setProperty('--reveal-delay', `${(index % 4) * 85}ms`);
+        if (element.matches('.garden, .closing-card')) element.classList.add('reveal-surface');
+      });
+
+      const reveal = (element) => {
+        element.classList.add('is-visible');
+        window.setTimeout(() => element.classList.add('reveal-finished'), 1000);
+      };
+
+      if (!('IntersectionObserver' in window)) {
+        revealItems.forEach(reveal);
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries, activeObserver) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          reveal(entry.target);
+          activeObserver.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -12% 0px', threshold: .12 });
+
+      revealItems.forEach((element) => observer.observe(element));
+    })();

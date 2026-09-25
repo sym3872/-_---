@@ -6,8 +6,17 @@
   <meta name="theme-color" content="#f5f8ff">
   <title>Lumi — 매일을 더 가볍게</title>
   <link rel="stylesheet" href="../CSS/lumi.css">
+  <script>
+    if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('motion-ready');
+    }
+  </script>
 </head>
 <body>
+  <div class="arrival" aria-hidden="true">
+    <div class="arrival-orbit"><span></span></div>
+    <div class="arrival-word"><b>lumi</b><small>your day, in one gentle flow</small></div>
+  </div>
   <header class="topbar">
     <nav class="nav wrap" aria-label="주 메뉴">
       <a class="brand" href="#top" aria-label="Lumi 홈"><span class="brand-mark" aria-hidden="true"></span>lumi</a>
