@@ -208,11 +208,16 @@
 
       const revealGroups = [
         ['.trust-list'],
-        ['.intro > .eyebrow', '.intro > .section-title', '.intro > .section-desc', '.feature-grid .feature'],
+        ['.intro > .section-title', '.intro > .section-desc', '.feature-grid .feature'],
         ['.garden', '.garden-copy', '.garden-instruction'],
         ['.closing-card'],
         ['footer .footer-row']
       ];
+
+      const intro = document.querySelector('.intro');
+      const introEyebrow = intro?.querySelector(':scope > .eyebrow');
+      const introTitle = intro?.querySelector(':scope > .section-title');
+      introEyebrow?.classList.add('intro-eyebrow-reveal');
 
       const revealItems = [];
       revealGroups.forEach((selectors) => {
@@ -250,6 +255,7 @@
 
       if (!('IntersectionObserver' in window)) {
         revealItems.forEach(reveal);
+        introEyebrow?.classList.add('is-visible');
         return;
       }
 
@@ -261,4 +267,10 @@
       }, { rootMargin: '0px 0px -12% 0px', threshold: .12 });
 
       revealItems.forEach((element) => observer.observe(element));
+
+      if (introTitle && introEyebrow) {
+        new IntersectionObserver(([entry]) => {
+          introEyebrow.classList.toggle('is-visible', entry.isIntersecting);
+        }, { rootMargin: '0px 0px -12% 0px', threshold: .18 }).observe(introTitle);
+      }
     })();
