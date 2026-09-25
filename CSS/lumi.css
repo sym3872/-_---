@@ -54,11 +54,14 @@
     .hero h1 strong { color: var(--blue); font-weight: inherit; }
     .hero-text { max-width: 31em; margin: 25px 0 0; color: var(--sub); font-size: 18px; line-height: 1.72; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
-    .button-primary, .button-secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 53px; padding: 0 22px; border-radius: 15px; font-size: 16px; font-weight: 800; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
+    .button-primary, .button-secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 53px; padding: 0 22px; border-radius: 15px; font-size: 16px; font-weight: 800; -webkit-tap-highlight-color: transparent; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
     .button-primary { color: #fff; background: var(--blue); box-shadow: 0 12px 22px rgba(47, 128, 247, .2); }
-    .button-primary:hover { transform: translateY(-3px); background: var(--blue-deep); box-shadow: 0 16px 28px rgba(47, 128, 247, .28); }
+    .button-primary:hover { transform: translateY(-3px); }
     .button-secondary { color: #42506a; border: 1px solid #dce5f2; background: #fff; }
-    .button-secondary:hover { transform: translateY(-3px); background: #f5f8ff; }
+    .button-secondary:hover { transform: translateY(-3px); }
+    .button-secondary:active { transform: translateY(-1px) scale(.985); transition-duration: .08s; }
+    .button-primary:focus-visible, .button-secondary:focus-visible { outline: 2px solid rgba(47, 128, 247, .45); outline-offset: 3px; }
+    .button-primary:focus:not(:focus-visible), .button-secondary:focus:not(:focus-visible) { outline: none; }
     .hero-note { display: flex; align-items: center; gap: 9px; margin: 22px 0 0; color: #8190a9; font-size: 13px; font-weight: 600; }
     .hero-note i { display: block; width: 7px; height: 7px; border-radius: 50%; background: #5bc8a8; }
 
@@ -368,6 +371,13 @@
     @keyframes lumi-feature-glow { from { opacity: 0; transform: scale(.45); } to { opacity: 1; transform: scale(1); } }
     @keyframes lumi-card-shine { from { opacity: 0; transform: translateX(0) skewX(-22deg); } 18% { opacity: .8; } to { opacity: 0; transform: translateX(390%) skewX(-22deg); } }
     @keyframes lumi-icon-pop { from { opacity: 0; transform: scale(.45) rotate(-18deg); } 68% { opacity: 1; transform: scale(1.14) rotate(6deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+
+    /* The hero's “learn more” button scrolls here; keep that navigation calm. */
+    html.quiet-feature-entry .intro.section-awake::before { animation: none; opacity: .13; }
+    html.quiet-feature-entry .feature.reveal-target.is-visible { animation: none; }
+    html.quiet-feature-entry .feature.is-visible::before { animation: none; opacity: .16; }
+    html.quiet-feature-entry .feature.is-visible::after { animation: none; opacity: 0; }
+    html.quiet-feature-entry .feature.is-visible .feature-icon { animation: none; }
 
     .garden::after {
       position: absolute;

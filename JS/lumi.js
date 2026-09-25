@@ -197,6 +197,14 @@
         window.setTimeout(() => arrival.remove(), 2200);
       }
 
+      const featureLink = document.querySelector('.hero-actions a[href="#features"]');
+      let quietFeatureTimer = 0;
+      featureLink?.addEventListener('click', () => {
+        root.classList.add('quiet-feature-entry');
+        window.clearTimeout(quietFeatureTimer);
+        quietFeatureTimer = window.setTimeout(() => root.classList.remove('quiet-feature-entry'), 1800);
+      });
+
       const revealGroups = [
         ['.trust-list'],
         ['.intro > .eyebrow', '.intro > .section-title', '.intro > .section-desc', '.feature-grid .feature'],
