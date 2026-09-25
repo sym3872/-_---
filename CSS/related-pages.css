@@ -176,6 +176,54 @@ button { font: inherit; }
 .related-footer-bottom > div { display: flex; gap: 18px; }.related-footer-bottom a { color: inherit; }
 .related-footer-status { justify-self: end; display: inline-flex; align-items: center; gap: 7px; color: #a7bad9; }.related-footer-status i { width: 7px; height: 7px; border-radius: 50%; background: #73dfc6; box-shadow: 0 0 12px rgba(115, 223, 198, .8); }
 
+/* Footer entrance: replayed whenever the footer returns to the viewport. */
+.related-footer.is-visible .related-footer-brand .brand-mark {
+  animation: footer-mark-in .72s cubic-bezier(.18, .86, .22, 1) .14s both;
+}
+.related-footer.is-visible .related-footer-brand p,
+.related-footer.is-visible .related-footer-brand > a:not(.brand) {
+  animation: footer-copy-in .62s cubic-bezier(.18, .86, .22, 1) .28s both;
+}
+.related-footer.is-visible .related-footer-links > div {
+  animation: footer-links-in .65s cubic-bezier(.18, .86, .22, 1) both;
+}
+.related-footer.is-visible .related-footer-links > div:nth-child(1) { animation-delay: .36s; }
+.related-footer.is-visible .related-footer-links > div:nth-child(2) { animation-delay: .46s; }
+.related-footer.is-visible .related-footer-letter {
+  animation: footer-letter-in .78s cubic-bezier(.18, .86, .22, 1) .5s both;
+}
+.related-footer.is-visible .related-footer-bottom {
+  animation: footer-bottom-in .62s cubic-bezier(.18, .86, .22, 1) .64s both;
+}
+.related-footer.is-visible .related-footer-status i {
+  animation: footer-status-in .7s cubic-bezier(.18, .86, .22, 1) .82s both;
+}
+@keyframes footer-mark-in {
+  from { opacity: 0; transform: translateY(14px) rotate(-18deg) scale(.62); }
+  to { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
+}
+@keyframes footer-copy-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes footer-links-in {
+  from { opacity: 0; transform: translateX(-14px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes footer-letter-in {
+  from { opacity: 0; transform: translateY(18px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes footer-bottom-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes footer-status-in {
+  0% { opacity: 0; transform: scale(.2); }
+  65% { opacity: 1; transform: scale(1.35); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
 html.motion-enabled [data-reveal] { opacity: 0; transform: translateY(32px); transition: opacity .75s cubic-bezier(.16, .8, .22, 1), transform .75s cubic-bezier(.16, .8, .22, 1); }
 html.motion-enabled [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
 html.page-ready .related-nav { animation: nav-in .65s ease-out both; }

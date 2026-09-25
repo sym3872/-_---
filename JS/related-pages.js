@@ -6,6 +6,7 @@ if (!reducedMotion) {
   requestAnimationFrame(() => root.classList.add('page-ready'));
 }
 
+document.querySelectorAll('.related-footer').forEach((footer) => footer.setAttribute('data-reveal', ''));
 const revealTargets = document.querySelectorAll('[data-reveal]');
 if (!reducedMotion && 'IntersectionObserver' in window) {
   const observer = new IntersectionObserver((entries) => {
