@@ -117,8 +117,6 @@
     .garden .eyebrow { color: #a9ccff; }
     .garden .section-title { color: #fff; }
     .garden .section-desc { color: #c4d3ee; }
-    .garden-chip { display: inline-flex; align-items: center; gap: 8px; margin-top: 28px; padding: 10px 13px; border: 1px solid rgba(218,232,255,.18); border-radius: 99px; color: #d4e5ff; background: rgba(255,255,255,.08); font-size: 13px; font-weight: 700; }
-    .garden-chip i { display: block; width: 7px; height: 7px; border-radius: 50%; background: #8bc1ff; box-shadow: 0 0 10px #8bc1ff; }
     .garden-instruction { position: absolute; z-index: 2; right: 47px; bottom: 39px; color: rgba(235,244,255,.67); font-size: 13px; font-weight: 700; pointer-events: none; }
     .garden-instruction b { color: #fff; }
     #impact-canvas { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; visibility: hidden; pointer-events: none; }
@@ -422,12 +420,10 @@
     html.motion-ready .garden.reveal-target.is-visible { animation: lumi-garden-arrive .95s cubic-bezier(.16, .84, .22, 1) var(--reveal-delay) both; }
     .garden.reveal-target.is-visible::after { animation: lumi-garden-light 1.5s cubic-bezier(.16, .8, .22, 1) calc(var(--reveal-delay) + 100ms) both; }
     html.motion-ready .garden-copy.reveal-target.is-visible { animation: lumi-garden-copy .88s cubic-bezier(.16, .84, .22, 1) var(--reveal-delay) both; }
-    .garden-copy.is-visible .garden-chip { animation: lumi-chip-pop .65s cubic-bezier(.16, .84, .22, 1) calc(var(--reveal-delay) + 260ms) both; }
     .garden-instruction.is-visible { animation: lumi-instruction-in .7s cubic-bezier(.16, .8, .22, 1) var(--reveal-delay) both; }
     @keyframes lumi-garden-arrive { from { opacity: 0; transform: translate3d(0, 38px, 0) scale(.95); } 72% { transform: translate3d(0, -3px, 0) scale(1.006); } to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); } }
     @keyframes lumi-garden-light { from { opacity: 0; transform: translateX(-12%); } 42% { opacity: 1; } to { opacity: 0; transform: translateX(14%); } }
     @keyframes lumi-garden-copy { from { opacity: 0; transform: translate3d(-32px, 24px, 0); } 70% { transform: translate3d(3px, -2px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
-    @keyframes lumi-chip-pop { from { opacity: 0; transform: translateY(12px) scale(.72); } 70% { transform: translateY(-2px) scale(1.06); } to { opacity: 1; transform: translateY(0) scale(1); } }
     @keyframes lumi-instruction-in { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: translateX(0); } }
 
     .closing-card::after {
