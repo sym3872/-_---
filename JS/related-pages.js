@@ -6,6 +6,7 @@ if (!reducedMotion) {
   requestAnimationFrame(() => root.classList.add('page-ready'));
 }
 
+document.querySelectorAll('.related-footer-status, .float-note, .start-tag, .quote-stat span').forEach((element) => element.remove());
 document.querySelectorAll('.related-footer').forEach((footer) => footer.setAttribute('data-reveal', ''));
 const revealTargets = document.querySelectorAll('[data-reveal]');
 if (!reducedMotion && 'IntersectionObserver' in window) {

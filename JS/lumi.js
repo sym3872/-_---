@@ -1,5 +1,6 @@
 
     (() => {
+      document.querySelectorAll('.footer-status').forEach((element) => element.remove());
       const garden = document.querySelector('[data-impact-garden]');
       const canvas = document.getElementById('impact-canvas');
       const ambientOrbElement = document.querySelector('.ambient-orb');
