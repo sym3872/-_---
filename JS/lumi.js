@@ -223,6 +223,8 @@
 
       const reveal = (element) => {
         element.classList.add('is-visible');
+        const section = element.closest('section');
+        if (section) section.classList.add('section-awake');
         window.setTimeout(() => element.classList.add('reveal-finished'), 1000);
       };
 

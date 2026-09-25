@@ -271,6 +271,151 @@
     @keyframes lumi-garden-rings { from { opacity: 0; transform: scale(.64); } to { opacity: 1; transform: scale(1); } }
     @keyframes lumi-closing-ring { from { opacity: 0; transform: scale(.65); } to { opacity: 1; transform: scale(1); } }
 
+    /* Section choreography: a distinct, one-time moment for every section. */
+    .trust-list { position: relative; overflow: hidden; padding-bottom: 4px; }
+    .trust-list::before {
+      position: absolute;
+      left: -10%;
+      bottom: 0;
+      width: 34%;
+      height: 2px;
+      border-radius: 99px;
+      opacity: 0;
+      background: linear-gradient(90deg, transparent, #7bc1ff, #89e5d1, transparent);
+      box-shadow: 0 0 16px rgba(76, 164, 255, .5);
+      content: "";
+      pointer-events: none;
+    }
+    .trust.section-awake { background: linear-gradient(90deg, #fff, #f9fcff 50%, #fff); }
+    .trust-list.is-visible::before { animation: lumi-trust-sweep 1.05s cubic-bezier(.16, .8, .22, 1) .1s both; }
+    .trust-list.is-visible .trust-logo { animation: lumi-logo-float .65s cubic-bezier(.16, .84, .22, 1) both; }
+    .trust-list.is-visible .trust-logo:nth-of-type(1) { animation-delay: .12s; }
+    .trust-list.is-visible .trust-logo:nth-of-type(2) { animation-delay: .2s; }
+    .trust-list.is-visible .trust-logo:nth-of-type(3) { animation-delay: .28s; }
+    .trust-list.is-visible .trust-logo:nth-of-type(4) { animation-delay: .36s; }
+    @keyframes lumi-trust-sweep { from { opacity: 0; transform: translateX(-30%); } 34% { opacity: 1; } to { opacity: 0; transform: translateX(370%); } }
+    @keyframes lumi-logo-float { from { opacity: 0; transform: translateY(12px) scale(.82); } 72% { transform: translateY(-3px) scale(1.04); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    .intro { position: relative; isolation: isolate; }
+    .intro::before {
+      position: absolute;
+      z-index: -1;
+      width: min(50vw, 650px);
+      height: 310px;
+      top: 60px;
+      left: -8%;
+      border-radius: 50%;
+      opacity: 0;
+      background: radial-gradient(ellipse, rgba(157, 210, 255, .28), rgba(239, 249, 255, 0) 68%);
+      content: "";
+      pointer-events: none;
+    }
+    .intro.section-awake::before { animation: lumi-intro-glow 1.2s cubic-bezier(.16, .8, .22, 1) both; }
+    .intro .section-title { position: relative; display: inline-block; }
+    .intro .section-title::after {
+      position: absolute;
+      left: 1%;
+      bottom: -14px;
+      width: 63%;
+      height: 5px;
+      border-radius: 99px;
+      transform: scaleX(0);
+      transform-origin: left;
+      background: linear-gradient(90deg, #2f80f7, #7ec7ff 55%, rgba(126, 199, 255, 0));
+      box-shadow: 0 6px 16px rgba(47, 128, 247, .25);
+      content: "";
+    }
+    .intro .section-title.is-visible::after { animation: lumi-title-line .75s cubic-bezier(.16, .8, .22, 1) .25s forwards; }
+    .feature { position: relative; overflow: hidden; isolation: isolate; }
+    .feature > * { position: relative; z-index: 1; }
+    .feature::before {
+      position: absolute;
+      z-index: 0;
+      width: 180px;
+      height: 180px;
+      top: -90px;
+      right: -80px;
+      border-radius: 50%;
+      opacity: 0;
+      background: radial-gradient(circle, rgba(118, 190, 255, .35), rgba(118, 190, 255, 0) 70%);
+      content: "";
+      pointer-events: none;
+    }
+    .feature:nth-child(2)::before { background: radial-gradient(circle, rgba(255, 159, 214, .35), rgba(255, 159, 214, 0) 70%); }
+    .feature:nth-child(3)::before { background: radial-gradient(circle, rgba(108, 223, 188, .35), rgba(108, 223, 188, 0) 70%); }
+    .feature::after {
+      position: absolute;
+      z-index: 2;
+      width: 55%;
+      height: 150%;
+      top: -25%;
+      left: -75%;
+      transform: skewX(-22deg);
+      opacity: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .66), transparent);
+      content: "";
+      pointer-events: none;
+    }
+    html.motion-ready .feature.reveal-target { transform: translate3d(0, 48px, 0) rotateX(7deg); transform-origin: center bottom; }
+    html.motion-ready .feature.reveal-target.is-visible { animation: lumi-feature-arrive .8s cubic-bezier(.16, .84, .22, 1) var(--reveal-delay) both; }
+    .feature.is-visible::before { animation: lumi-feature-glow 1.05s cubic-bezier(.16, .8, .22, 1) calc(var(--reveal-delay) + 90ms) both; }
+    .feature.is-visible::after { animation: lumi-card-shine .8s ease-out calc(var(--reveal-delay) + 160ms) both; }
+    .feature.is-visible .feature-icon { animation: lumi-icon-pop .72s cubic-bezier(.16, .84, .22, 1) calc(var(--reveal-delay) + 170ms) both; }
+    @keyframes lumi-intro-glow { from { opacity: 0; transform: scale(.7) translateX(-8%); } to { opacity: 1; transform: scale(1) translateX(0); } }
+    @keyframes lumi-title-line { to { transform: scaleX(1); } }
+    @keyframes lumi-feature-arrive { from { opacity: 0; transform: translate3d(0, 48px, 0) rotateX(7deg) scale(.94); } 70% { transform: translate3d(0, -4px, 0) rotateX(0) scale(1.012); } to { opacity: 1; transform: translate3d(0, 0, 0) rotateX(0) scale(1); } }
+    @keyframes lumi-feature-glow { from { opacity: 0; transform: scale(.45); } to { opacity: 1; transform: scale(1); } }
+    @keyframes lumi-card-shine { from { opacity: 0; transform: translateX(0) skewX(-22deg); } 18% { opacity: .8; } to { opacity: 0; transform: translateX(390%) skewX(-22deg); } }
+    @keyframes lumi-icon-pop { from { opacity: 0; transform: scale(.45) rotate(-18deg); } 68% { opacity: 1; transform: scale(1.14) rotate(6deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+
+    .garden::after {
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      opacity: 0;
+      background: radial-gradient(circle at 75% 42%, rgba(117, 180, 255, .35), rgba(117, 180, 255, 0) 25%), linear-gradient(115deg, transparent 38%, rgba(168, 218, 255, .12) 50%, transparent 62%);
+      content: "";
+      pointer-events: none;
+    }
+    html.motion-ready .garden.reveal-target.is-visible { animation: lumi-garden-arrive .95s cubic-bezier(.16, .84, .22, 1) var(--reveal-delay) both; }
+    .garden.reveal-target.is-visible::after { animation: lumi-garden-light 1.5s cubic-bezier(.16, .8, .22, 1) calc(var(--reveal-delay) + 100ms) both; }
+    html.motion-ready .garden-copy.reveal-target.is-visible { animation: lumi-garden-copy .88s cubic-bezier(.16, .84, .22, 1) var(--reveal-delay) both; }
+    .garden-copy.is-visible .garden-chip { animation: lumi-chip-pop .65s cubic-bezier(.16, .84, .22, 1) calc(var(--reveal-delay) + 260ms) both; }
+    .garden-instruction.is-visible { animation: lumi-instruction-in .7s cubic-bezier(.16, .8, .22, 1) var(--reveal-delay) both; }
+    @keyframes lumi-garden-arrive { from { opacity: 0; transform: translate3d(0, 38px, 0) scale(.95); } 72% { transform: translate3d(0, -3px, 0) scale(1.006); } to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); } }
+    @keyframes lumi-garden-light { from { opacity: 0; transform: translateX(-12%); } 42% { opacity: 1; } to { opacity: 0; transform: translateX(14%); } }
+    @keyframes lumi-garden-copy { from { opacity: 0; transform: translate3d(-32px, 24px, 0); } 70% { transform: translate3d(3px, -2px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+    @keyframes lumi-chip-pop { from { opacity: 0; transform: translateY(12px) scale(.72); } 70% { transform: translateY(-2px) scale(1.06); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes lumi-instruction-in { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: translateX(0); } }
+
+    .closing-card::after {
+      position: absolute;
+      z-index: 0;
+      width: 42%;
+      height: 165%;
+      top: -32%;
+      left: -48%;
+      transform: skewX(-22deg);
+      opacity: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .3), transparent);
+      content: "";
+      pointer-events: none;
+    }
+    .closing-card h2,
+    .closing-card p,
+    .closing-card .button-secondary { z-index: 1; }
+    html.motion-ready .closing-card.reveal-target.is-visible { animation: lumi-closing-arrive .95s cubic-bezier(.16, .84, .22, 1) var(--reveal-delay) both; }
+    .closing-card.reveal-target.is-visible::after { animation: lumi-closing-shine 1s ease-out calc(var(--reveal-delay) + 130ms) both; }
+    .closing-card.is-visible .button-secondary { animation: lumi-button-pop .65s cubic-bezier(.16, .84, .22, 1) calc(var(--reveal-delay) + 250ms) both; }
+    @keyframes lumi-closing-arrive { from { opacity: 0; transform: translate3d(0, 38px, 0) scale(.94); } 70% { transform: translate3d(0, -4px, 0) scale(1.01); } to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); } }
+    @keyframes lumi-closing-shine { from { opacity: 0; transform: translateX(0) skewX(-22deg); } 20% { opacity: 1; } to { opacity: 0; transform: translateX(420%) skewX(-22deg); } }
+    @keyframes lumi-button-pop { from { opacity: 0; transform: translateY(13px) scale(.82); } 72% { transform: translateY(-2px) scale(1.06); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    .footer-row.is-visible .brand-mark { animation: lumi-footer-mark .7s cubic-bezier(.16, .84, .22, 1) .12s both; }
+    .footer-row.is-visible > span:last-child { animation: lumi-footer-text .6s ease-out .24s both; }
+    @keyframes lumi-footer-mark { from { opacity: 0; transform: scale(.45) rotate(-25deg); } 68% { transform: scale(1.12) rotate(7deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+    @keyframes lumi-footer-text { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: translateX(0); } }
+
     @media (prefers-reduced-motion: reduce) {
       .arrival { display: none !important; }
       .reveal-target { opacity: 1 !important; transform: none !important; }
