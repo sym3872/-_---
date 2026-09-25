@@ -221,11 +221,22 @@
         if (element.matches('.garden, .closing-card')) element.classList.add('reveal-surface');
       });
 
+      const revealTimers = new WeakMap();
       const reveal = (element) => {
+        window.clearTimeout(revealTimers.get(element));
         element.classList.add('is-visible');
         const section = element.closest('section');
         if (section) section.classList.add('section-awake');
-        window.setTimeout(() => element.classList.add('reveal-finished'), 1000);
+        revealTimers.set(element, window.setTimeout(() => element.classList.add('reveal-finished'), 1000));
+      };
+
+      const hide = (element) => {
+        window.clearTimeout(revealTimers.get(element));
+        element.classList.remove('is-visible', 'reveal-finished');
+        const section = element.closest('section');
+        if (section && !section.querySelector('.reveal-target.is-visible')) {
+          section.classList.remove('section-awake');
+        }
       };
 
       if (!('IntersectionObserver' in window)) {
@@ -233,11 +244,10 @@
         return;
       }
 
-      const observer = new IntersectionObserver((entries, activeObserver) => {
+      const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          reveal(entry.target);
-          activeObserver.unobserve(entry.target);
+          if (entry.isIntersecting) reveal(entry.target);
+          else hide(entry.target);
         });
       }, { rootMargin: '0px 0px -12% 0px', threshold: .12 });
 
